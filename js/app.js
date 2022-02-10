@@ -1,15 +1,16 @@
+function createElement(tag, props, ... children) {
+    const element = document.createElement(tag);
+
+    Object.keys(props).forEach(key => element[key] = props[key]);
+}
+
+
 function createTodoItem(title) {
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'checkbox';
+    const checkbox = createElement('input', { type: 'checkbox', className: 'checkbox' });
 
-    const label = document.createElement('label');
-    label.innerText = title;
-    label.className = 'title';
+    const label = document.createElement('label', { className: 'title'}, title);
 
-    const editInput = document.createElement('input');
-    editInput.type = 'text';
-    editInput.className = 'textfield';
+    const editInput = document.createElement('input', { type: 'text', className: 'textfield'});
 
     const editButton = document.createElement('button');
     editButton.innerText = 'Изменить';
@@ -80,7 +81,7 @@ function editTodoItem() {
 function deleteTodoItem() {
     const listItem = this.parentNode;
     todoList.removeChild(listItem);
-    
+
 }
 
 const todoForm = document.getElementById('todo-form');
@@ -88,4 +89,9 @@ const addInput = document.getElementById('add-input');
 const todoList = document.getElementById('todo-list');
 const todoItems = document.querySelectorAll('.todo-item');
 
-todoForm.addEventListener('submit', addTodoItem);
+function main() {
+    todoForm.addEventListener('submit', addTodoItem);
+    todoItems.forEach(item => bindEvents(item));
+}
+
+main();
